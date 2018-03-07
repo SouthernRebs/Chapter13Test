@@ -27,7 +27,7 @@ public class CrimeFragment extends Fragment {
 
     private static final int REQUEST_DATE = 0;
 
-    private HwItem mHwItem;
+    private Homework_Assignment mHomeworkAssignment;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
@@ -45,7 +45,7 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
-        mHwItem = HwRepository.get(getActivity()).getCrime(crimeId);
+        mHomeworkAssignment = HwRepository.get(getActivity()).getCrime(crimeId);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class CrimeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
         mTitleField = (EditText) v.findViewById(R.id.crime_title);
-        mTitleField.setText(mHwItem.getTitle());
+        mTitleField.setText(mHomeworkAssignment.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -63,7 +63,7 @@ public class CrimeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mHwItem.setTitle(s.toString());
+                mHomeworkAssignment.setTitle(s.toString());
             }
 
             @Override
@@ -79,19 +79,19 @@ public class CrimeFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 DatePickerFragment dialog = DatePickerFragment
-                        .newInstance(mHwItem.getDate());
+                        .newInstance(mHomeworkAssignment.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });
 
         mSolvedCheckbox = (CheckBox) v.findViewById(R.id.crime_solved);
-        mSolvedCheckbox.setChecked(mHwItem.isSolved());
+        mSolvedCheckbox.setChecked(mHomeworkAssignment.isSolved());
         mSolvedCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, 
                     boolean isChecked) {
-                mHwItem.setSolved(isChecked);
+                mHomeworkAssignment.setSolved(isChecked);
             }
         });
 
@@ -107,12 +107,12 @@ public class CrimeFragment extends Fragment {
         if (requestCode == REQUEST_DATE) {
             Date date = (Date) data
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-            mHwItem.setDate(date);
+            mHomeworkAssignment.setDate(date);
             updateDate();
         }
     }
 
     private void updateDate() {
-        mDateButton.setText(mHwItem.getDate().toString());
+        mDateButton.setText(mHomeworkAssignment.getDate().toString());
     }
 }

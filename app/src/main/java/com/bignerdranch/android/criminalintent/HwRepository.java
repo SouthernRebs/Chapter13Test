@@ -9,7 +9,7 @@ import java.util.UUID;
 public class HwRepository {
     private static HwRepository sHwRepository;
 
-    private List<HwItem> mHwItems;
+    private List<Homework_Assignment> mHomeworkAssignments;
 
     public static HwRepository get(Context context) {
         if (sHwRepository == null) {
@@ -20,21 +20,21 @@ public class HwRepository {
     }
 
     private HwRepository(Context context) {
-        mHwItems = new ArrayList<>();
+        mHomeworkAssignments = new ArrayList<>();
     }
 
-    public void addCrime(HwItem c) {
-        mHwItems.add(c);
+    public void addCrime(Homework_Assignment c) {
+        mHomeworkAssignments.add(c);
     }
 
-    public List<HwItem> getCrimes() {
-        return mHwItems;
+    public List<Homework_Assignment> getCrimes() {
+        return mHomeworkAssignments;
     }
 
-    public HwItem getCrime(UUID id) {
-        for (HwItem hwItem : mHwItems) {
-            if (hwItem.getId().equals(id)) {
-                return hwItem;
+    public Homework_Assignment getCrime(UUID id) {
+        for (Homework_Assignment homeworkAssignment : mHomeworkAssignments) {
+            if (homeworkAssignment.getId().equals(id)) {
+                return homeworkAssignment;
             }
         }
 

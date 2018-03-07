@@ -78,10 +78,10 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_crime:
-                HwItem hwItem = new HwItem();
-                HwRepository.get(getActivity()).addCrime(hwItem);
+                Homework_Assignment homeworkAssignment = new Homework_Assignment();
+                HwRepository.get(getActivity()).addCrime(homeworkAssignment);
                 Intent intent = CrimePagerActivity
-                        .newIntent(getActivity(), hwItem.getId());
+                        .newIntent(getActivity(), homeworkAssignment.getId());
                 startActivity(intent);
                 return true;
             case R.id.show_subtitle:
@@ -109,10 +109,10 @@ public class CrimeListFragment extends Fragment {
 
     private void updateUI() {
         HwRepository hwRepository = HwRepository.get(getActivity());
-        List<HwItem> hwItems = hwRepository.getCrimes();
+        List<Homework_Assignment> homeworkAssignments = hwRepository.getCrimes();
 
         if (mAdapter == null) {
-            mAdapter = new CrimeAdapter(hwItems);
+            mAdapter = new CrimeAdapter(homeworkAssignments);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
@@ -124,7 +124,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private HwItem mHwItem;
+        private Homework_Assignment mHomeworkAssignment;
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -139,26 +139,26 @@ public class CrimeListFragment extends Fragment {
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
         }
 
-        public void bind(HwItem hwItem) {
-            mHwItem = hwItem;
-            mTitleTextView.setText(mHwItem.getTitle());
-            mDateTextView.setText(mHwItem.getDate().toString());
-            mSolvedImageView.setVisibility(hwItem.isSolved() ? View.VISIBLE : View.GONE);
+        public void bind(Homework_Assignment homeworkAssignment) {
+            mHomeworkAssignment = homeworkAssignment;
+            mTitleTextView.setText(mHomeworkAssignment.getTitle());
+            mDateTextView.setText(mHomeworkAssignment.getDate().toString());
+            mSolvedImageView.setVisibility(homeworkAssignment.isSolved() ? View.VISIBLE : View.GONE);
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mHwItem.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mHomeworkAssignment.getId());
             startActivity(intent);
         }
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
 
-        private List<HwItem> mHwItems;
+        private List<Homework_Assignment> mHomeworkAssignments;
 
-        public CrimeAdapter(List<HwItem> hwItems) {
-            mHwItems = hwItems;
+        public CrimeAdapter(List<Homework_Assignment> homeworkAssignments) {
+            mHomeworkAssignments = homeworkAssignments;
         }
 
         @Override
@@ -169,13 +169,13 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
-            HwItem hwItem = mHwItems.get(position);
-            holder.bind(hwItem);
+            Homework_Assignment homeworkAssignment = mHomeworkAssignments.get(position);
+            holder.bind(homeworkAssignment);
         }
 
         @Override
         public int getItemCount() {
-            return mHwItems.size();
+            return mHomeworkAssignments.size();
         }
     }
 }
