@@ -78,10 +78,10 @@ public class CrimeListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.new_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
+                Homework_Assignment homeworkAssignment = new Homework_Assignment();
+                HwRepository.get(getActivity()).addCrime(homeworkAssignment);
                 Intent intent = CrimePagerActivity
-                        .newIntent(getActivity(), crime.getId());
+                        .newIntent(getActivity(), homeworkAssignment.getId());
                 startActivity(intent);
                 return true;
             case R.id.show_subtitle:
@@ -95,8 +95,8 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateSubtitle() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        int crimeCount = crimeLab.getCrimes().size();
+        HwRepository hwRepository = HwRepository.get(getActivity());
+        int crimeCount = hwRepository.getCrimes().size();
         String subtitle = getString(R.string.subtitle_format, crimeCount);
 
         if (!mSubtitleVisible) {
@@ -108,11 +108,11 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateUI() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        List<Crime> crimes = crimeLab.getCrimes();
+        HwRepository hwRepository = HwRepository.get(getActivity());
+        List<Homework_Assignment> homeworkAssignments = hwRepository.getCrimes();
 
         if (mAdapter == null) {
-            mAdapter = new CrimeAdapter(crimes);
+            mAdapter = new CrimeAdapter(homeworkAssignments);
             mCrimeRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
@@ -124,7 +124,7 @@ public class CrimeListFragment extends Fragment {
     private class CrimeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private Crime mCrime;
+        private Homework_Assignment mHomeworkAssignment;
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -139,26 +139,26 @@ public class CrimeListFragment extends Fragment {
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
         }
 
-        public void bind(Crime crime) {
-            mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
+        public void bind(Homework_Assignment homeworkAssignment) {
+            mHomeworkAssignment = homeworkAssignment;
+            mTitleTextView.setText(mHomeworkAssignment.getTitle());
+            mDateTextView.setText(mHomeworkAssignment.getDate().toString());
+            mSolvedImageView.setVisibility(homeworkAssignment.isSolved() ? View.VISIBLE : View.GONE);
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mHomeworkAssignment.getId());
             startActivity(intent);
         }
     }
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
 
-        private List<Crime> mCrimes;
+        private List<Homework_Assignment> mHomeworkAssignments;
 
-        public CrimeAdapter(List<Crime> crimes) {
-            mCrimes = crimes;
+        public CrimeAdapter(List<Homework_Assignment> homeworkAssignments) {
+            mHomeworkAssignments = homeworkAssignments;
         }
 
         @Override
@@ -169,13 +169,13 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CrimeHolder holder, int position) {
-            Crime crime = mCrimes.get(position);
-            holder.bind(crime);
+            Homework_Assignment homeworkAssignment = mHomeworkAssignments.get(position);
+            holder.bind(homeworkAssignment);
         }
 
         @Override
         public int getItemCount() {
-            return mCrimes.size();
+            return mHomeworkAssignments.size();
         }
     }
 }

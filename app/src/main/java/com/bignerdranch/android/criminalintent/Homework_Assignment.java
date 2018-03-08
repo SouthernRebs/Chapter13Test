@@ -3,14 +3,14 @@ package com.bignerdranch.android.criminalintent;
 import java.util.Date;
 import java.util.UUID;
 
-public class Crime {
+public class Homework_Assignment {
 
     private UUID mId;
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
 
-    public Crime() {
+    public Homework_Assignment() {
         mId = UUID.randomUUID();
         mDate = new Date();
     }

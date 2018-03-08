@@ -18,7 +18,7 @@ public class CrimePagerActivity extends AppCompatActivity {
             "com.bignerdranch.android.criminalintent.crime_id";
 
     private ViewPager mViewPager;
-    private List<Crime> mCrimes;
+    private List<Homework_Assignment> mHomeworkAssignments;
 
     public static Intent newIntent(Context packageContext, UUID crimeId) {
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
@@ -36,24 +36,24 @@ public class CrimePagerActivity extends AppCompatActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.crime_view_pager);
 
-        mCrimes = CrimeLab.get(this).getCrimes();
+        mHomeworkAssignments = HwRepository.get(this).getCrimes();
         FragmentManager fragmentManager = getSupportFragmentManager();
         mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
 
             @Override
             public Fragment getItem(int position) {
-                Crime crime = mCrimes.get(position);
-                return CrimeFragment.newInstance(crime.getId());
+                Homework_Assignment homeworkAssignment = mHomeworkAssignments.get(position);
+                return CrimeFragment.newInstance(homeworkAssignment.getId());
             }
 
             @Override
             public int getCount() {
-                return mCrimes.size();
+                return mHomeworkAssignments.size();
             }
         });
 
-        for (int i = 0; i < mCrimes.size(); i++) {
-            if (mCrimes.get(i).getId().equals(crimeId)) {
+        for (int i = 0; i < mHomeworkAssignments.size(); i++) {
+            if (mHomeworkAssignments.get(i).getId().equals(crimeId)) {
                 mViewPager.setCurrentItem(i);
                 break;
             }
