@@ -27,7 +27,7 @@ public class CrimeFragment extends Fragment {
 
     private static final int REQUEST_DATE = 0;
 
-    private Crime mCrime;
+    private HomeworkAssignment mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckbox;
@@ -45,7 +45,7 @@ public class CrimeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
-        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        mCrime = AssignmentsRepository.get(getActivity()).getCrime(crimeId);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CrimeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);
 
-        mTitleField = (EditText) v.findViewById(R.id.crime_title);
+        mTitleField = (EditText) v.findViewById(R.id.assignment_title);
         mTitleField.setText(mCrime.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -72,7 +72,7 @@ public class CrimeFragment extends Fragment {
             }
         });
 
-        mDateButton = (Button) v.findViewById(R.id.crime_date);
+        mDateButton = (Button) v.findViewById(R.id.due_date);
         updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class CrimeFragment extends Fragment {
         });
 
         mSolvedCheckbox = (CheckBox) v.findViewById(R.id.crime_solved);
-        mSolvedCheckbox.setChecked(mCrime.isSolved());
+        mSolvedCheckbox.setChecked(mCrime.isCompleted());
         mSolvedCheckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, 
