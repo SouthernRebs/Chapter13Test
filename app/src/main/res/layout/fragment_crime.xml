@@ -23,6 +23,18 @@
         android:layout_height="wrap_content"
         android:text="@string/crime_details_label"/>
 
+    <EditText
+        android:id="@+id/homework_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/detail_of_homework"/>
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/date_picker_title"/>
+
     <Button
         android:id="@+id/crime_date"
         android:layout_width="match_parent"
