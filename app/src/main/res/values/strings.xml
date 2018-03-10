@@ -1,16 +1,12 @@
 <resources>
-
-
     <string name="app_name">Homework Assignment</string>
-    <string name="crime_title_hint">Enter a title for the homework.</string>
-    <string name="detail_of_homework">Enter a description for the homework.</string>
-    <string name="crime_title_label">Title</string>
-    <string name="crime_details_label">Description</string>
-    <string name="crime_solved_label">Completed</string>
+    <string name="homework_title_hint">Enter a title for the homework.</string>
+    <string name="homework_title_label">Title</string>
+    <string name="homework_details_label">Details</string>
+    <string name="homework_solved_label">Completed</string>
     <string name="date_picker_title">Due Date:</string>
-    <string name="new_crime">New Homework Assignment</string>
-
+    <string name="new_homework">New Homework Assignment</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
-    <string name="subtitle_format">%1$d homeworkAssignments</string>
+    <string name="subtitle_format">%1$d homeworks</string>
 </resources>
