@@ -1,16 +1,16 @@
-package com.bignerdranch.android.criminalintent;
+package com.bignerdranch.android.homework;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class Crime {
+public class Homework {
 
     private UUID mId;
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
 
-    public Crime() {
+    public Homework() {
         mId = UUID.randomUUID();
         mDate = new Date();
     }
