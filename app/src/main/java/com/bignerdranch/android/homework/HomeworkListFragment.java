@@ -1,4 +1,4 @@
-package com.bignerdranch.android.criminalintent;
+package com.bignerdranch.android.homework;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +17,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CrimeListFragment extends Fragment {
+public class HomeworkListFragment extends Fragment {
 
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
 
-    private RecyclerView mCrimeRecyclerView;
-    private CrimeAdapter mAdapter;
+    private RecyclerView mHomeworkRecyclerView;
+    private HomeworkAdapter mAdapter;
     private boolean mSubtitleVisible;
 
     @Override
@@ -34,11 +34,11 @@ public class CrimeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_homework_list, container, false);
 
-        mCrimeRecyclerView = (RecyclerView) view
-                .findViewById(R.id.crime_recycler_view);
-        mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mHomeworkRecyclerView = (RecyclerView) view
+                .findViewById(R.id.homework_recycler_view);
+        mHomeworkRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
@@ -64,7 +64,7 @@ public class CrimeListFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_crime_list, menu);
+        inflater.inflate(R.menu.fragment_homework_list, menu);
 
         MenuItem subtitleItem = menu.findItem(R.id.show_subtitle);
         if (mSubtitleVisible) {
@@ -77,11 +77,11 @@ public class CrimeListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.new_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePagerActivity
-                        .newIntent(getActivity(), crime.getId());
+            case R.id.new_homework:
+                Homework homework = new Homework();
+                HomeworkLab.get(getActivity()).addHomework(homework);
+                Intent intent = HomeworkPagerActivity
+                        .newIntent(getActivity(), homework.getId());
                 startActivity(intent);
                 return true;
             case R.id.show_subtitle:
@@ -95,9 +95,9 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateSubtitle() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getString(R.string.subtitle_format, crimeCount);
+        HomeworkLab homeworkLab = HomeworkLab.get(getActivity());
+        int homeworkCount = homeworkLab.getHomeworks().size();
+        String subtitle = getString(R.string.subtitle_format, homeworkCount);
 
         if (!mSubtitleVisible) {
             subtitle = null;
@@ -108,12 +108,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     private void updateUI() {
-        CrimeLab crimeLab = CrimeLab.get(getActivity());
-        List<Crime> crimes = crimeLab.getCrimes();
+        HomeworkLab homeworkLab = HomeworkLab.get(getActivity());
+        List<Homework> homeworks = homeworkLab.getHomeworks();
 
         if (mAdapter == null) {
-            mAdapter = new CrimeAdapter(crimes);
-            mCrimeRecyclerView.setAdapter(mAdapter);
+            mAdapter = new HomeworkAdapter(homeworks);
+            mHomeworkRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
         }
@@ -121,61 +121,61 @@ public class CrimeListFragment extends Fragment {
         updateSubtitle();
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder
+    private class HomeworkHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        private Crime mCrime;
+        private Homework mHomework;
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
         private ImageView mSolvedImageView;
 
-        public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_crime, parent, false));
+        public HomeworkHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_homework, parent, false));
             itemView.setOnClickListener(this);
 
-            mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
-            mDateTextView = (TextView) itemView.findViewById(R.id.crime_date);
-            mSolvedImageView = (ImageView) itemView.findViewById(R.id.crime_solved);
+            mTitleTextView = (TextView) itemView.findViewById(R.id.homework_title);
+            mDateTextView = (TextView) itemView.findViewById(R.id.homework_date);
+            mSolvedImageView = (ImageView) itemView.findViewById(R.id.homework_solved);
         }
 
-        public void bind(Crime crime) {
-            mCrime = crime;
-            mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
+        public void bind(Homework homework) {
+            mHomework = homework;
+            mTitleTextView.setText(mHomework.getTitle());
+            mDateTextView.setText(mHomework.getDate().toString());
+            mSolvedImageView.setVisibility(homework.isSolved() ? View.VISIBLE : View.GONE);
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
+            Intent intent = HomeworkPagerActivity.newIntent(getActivity(), mHomework.getId());
             startActivity(intent);
         }
     }
 
-    private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
+    private class HomeworkAdapter extends RecyclerView.Adapter<HomeworkHolder> {
 
-        private List<Crime> mCrimes;
+        private List<Homework> mHomeworks;
 
-        public CrimeAdapter(List<Crime> crimes) {
-            mCrimes = crimes;
+        public HomeworkAdapter(List<Homework> homeworks) {
+            mHomeworks = homeworks;
         }
 
         @Override
-        public CrimeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public HomeworkHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new CrimeHolder(layoutInflater, parent);
+            return new HomeworkHolder(layoutInflater, parent);
         }
 
         @Override
-        public void onBindViewHolder(CrimeHolder holder, int position) {
-            Crime crime = mCrimes.get(position);
-            holder.bind(crime);
+        public void onBindViewHolder(HomeworkHolder holder, int position) {
+            Homework homework = mHomeworks.get(position);
+            holder.bind(homework);
         }
 
         @Override
         public int getItemCount() {
-            return mCrimes.size();
+            return mHomeworks.size();
         }
     }
 }
